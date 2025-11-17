@@ -1,0 +1,46 @@
+---
+title: Assignment 05
+author:
+  - name: Norah Jones
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+number-sections: true
+date: today
+format:
+  docx:
+    fontsize: 12pt
+date-modified: today
+date-format: long
+jupyter: python3
+execute:
+  echo: false
+  eval: true
+  freeze: auto
+---
+
+```{python}
+from pyspark.sql import SparkSession
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+import numpy as np
+
+np.random.seed(42)
+
+pio.renderers.default = "notebook+notebook_connected+vscode"
+
+# Initialize Spark Session
+spark = SparkSession.builder.appName("LightcastData").getOrCreate()
+
+# Load Data
+df = spark.read.option("header", "true").option("inferSchema", "true").option("multiLine","true").option("escape", "\"").csv("data/lightcast_job_postings.csv")
+
+# Show Schema and Sample Data
+print("---This is Diagnostic check, No need to print it in the final doc---")
+
+# df.printSchema() # comment this line when rendering the submission
+df.show(5)
+```
